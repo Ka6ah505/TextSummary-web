@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>TextSummary</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
+    <link rel="icon" href="/favicon.ico" type="image/ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="rc/css/style.css" type="text/css" media="all" />
+    <script type="text/javascript" src="rc/javascript/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="rc/javascript/main.js"></script>
+	<script type="text/javascript" src="Az.js-master/Az.js-master/src/az.js"></script>
+	<script type="text/javascript" src="Az.js-master/Az.js-master/src/az.tokens.js"></script>
+	<script type="text/javascript" src="Az.js-master/Az.js-master/src/az.morph.js"></script>
+	<script type="text/javascript" src="Az.js-master/Az.js-master/src/az.dawg.js"></script>
+</head>
+<body class="default">
+    <noscript>
+        <div style="background-color: #F00; color: #FFF; text-align: center; padding: 10px;">Данный сайт требует включения поддержки JavaScript в Вашем браузере.</div>
+    </noscript>
+    <div id="wrapper">
+        <div id="mainWrapper" class="clearfix">
+            <div id="main" class="clearfix">
+                <div id="mainPageContent">
+					<!-- Заголовок -->
+                    <h2 id="periodsHeader" class="h-head" style="text-align: left">
+                        <a>
+                            <img src="rc/images/mainIcon.png" />
+                        </a>
+                        <span>
+                            <a style="color: darkgreen; font-family: Garamond; font-size: 35px; padding-left: 30px; font-weight: bold;" href="index.html">TextSummary</a>
+                        </span>
+                        <span style="float: right">
+                            <a href="BACK.aspx" style="font-family: Garamond; font-size: 20px; padding-right: 20px; color: darkgreen">О проекте</a>
+                        </span>
+                    </h2>
+<!--начало основного блока-->
+                    <div class="line"></div>
+                    <h2 class="content-header">
+                        <span id="textLength"></span>
+                        <span style="color: AppWorkspace; font-size: 20px">Сократи себе что-нибудь...</span>
+                        <span id="resetText2Default" title="reset text to default">x</span>
+                    </h2>
+                    <center>
+                        <table cellpadding="0" cellspacing="0" style="width: 100%;" border="0">
+							<tr>
+								<td style="padding: 0px; border: none;" align="center">
+                                    <textarea id="inputText" placeholder="Вставте Ваш текст для сокращения..." rows="20" style="width: 99%;"></textarea>
+								</td>
+                                <td style="padding: 0px; border: none;" align="center">
+                                    <textarea id="outputText" disabled="True" rows="20" style="width: 99%;"></textarea>
+                                </td>
+                            </tr>
+							<tr>
+								<td style="padding: 0px; border: none;" align="left" colspan="2">
+								<br/>
+								<label for="summary">Процент сжатия:</label>
+								<input id="summary" type="range" max="100" min="0" value="20" list="tickmarks" onchange="document.getElementById('rangeValue').innerHTML = this.value+'%';" />
+								
+								<datalist id="tickmarks">
+									<option value="0" label="0%">
+									<option value="50" label="50%">
+									<option value="100" label="100%">
+								</datalist>
+								<span id="rangeValue">20%</span>
+								</td>
+							</tr>
+                        </table>
+                    </center>
+                    <div class="page-box-button">
+                        <input id="processButton" class="form-button" value="Сократить" type="submit" style="width: 220px">
+                    </div>
+<!--конец основного блока-->
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer" class="clearfix">
+            <div id="footerMenu">
+                <span>&copy; 2018
+                </span>
+                <span class="footer-menu-separator">|</span><span><a href="BACK.aspx">About</a></span>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+
+</body>
+</html>
