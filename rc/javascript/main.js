@@ -98,8 +98,8 @@ $(document).ready(function () {
 	
 	
 	
-
-	morhynizator = Az.Morph.init('../../dicts');	// подключение словарей для нормализации
+	// инициализация словарей с нормализацией
+	morhynizator = Az.Morph.init('rc/Az.js-master/dicts');
 	
 	
 	// обработка кнопки выполнить
@@ -118,56 +118,16 @@ $(document).ready(function () {
 		//sentence.startTest = $("#inputText")
 		
 		
-		var tokens = tokenizator.done()//({ 'WORD': true }, true) //токены слова
+		var tokens = tokenizator.done({ 'WORD': true }, true) //токены слова
 		//var n = tokenizator.count({ 'WORD': true }, true) //количесткво токенов слов
 		var temptext = '';
 		for (var i = 0; i < tokens.length; i++) {
-			var tword = tokens[i].toString(); // слово для морфологического разбора
-			var t = Az.Morph(tword, { typos: 'auto' }); // морфологический разбор слова
-			console.log(t)
-		//	tword = t[0].normalize(true).word; //начальная форма слова 
-		//	temptext = temptext + tword+ '\n'; // вывод
+			var t = Az.Morph(tokens[i].toString(), { typos: 'auto' }); // морфологический разбор слова
+			var tword = t[0].normalize(true).word; //начальная форма слова 
+			temptext = temptext + tword+ '\n'; // вывод
 		}
-		////$("#outputText").val(temptext); // загоняем тект в textarea
-		
-		var tempS = '';
-		
-		var temp = getText( $("#inputText") );
-		
-		
-		
-		
-		
-		
-		///---------РЕГУЛЯРКА-----------
-		
-		//var mass = temp.replace(/([.?!])\s*(?=[А-Я])/g, "$1|").split("|")
-		
-		//mass.forEach(function(item, i, arr) {
-		//	tempS = tempS + i + " ----- " + item + "\n";
-		//});
-		
-		/*var regex = new RegExp(".{0,}?(?:\\.|!|\\?)(?:(?=\\ [А-Я0-9])|$)", "g");
-		var match;
-		
-		while ((match = regex.exec(temp)) != null) {
-			if (match.index === regex.lastIndex) {
-				++regex.lastIndex;
-			}
-			tempS = tempS + match[0] + "\n";
-		}
-		
-		$("#outputText").val(tempS);*/
-		
+		$("#outputText").val(temptext); // загоняем тект в textarea
     });
-
-
-	
-	
-	
-	
-	
-	
 	
 	
 	
