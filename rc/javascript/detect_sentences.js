@@ -13,4 +13,9 @@ var find_separete = function(text) {
 	return positions;
 };
 
+// нахождение тегов с левой стороный от потенциальной точки конца предложения
+var search_left_word = function(text, position, get) {
+
+};
+
 console.log(find_separete(testtext));
