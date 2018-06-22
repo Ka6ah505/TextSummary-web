@@ -23,12 +23,16 @@
 
 // настройка ограничений для поля ввода
 $(document).ready(function () {
+	// блок констант
     var MAX_INPUTTEXT_LENGTH = 10000,
         LOCALSTORAGE_TEXT_KEY = 'tonality-marking-text',
         LOCALSTORAGE_PROCESSTYPE_KEY = 'process-type',
         DEFAULT_TEXT = '',
-        ShowInformationsAboutLimits = false;
+        ShowInformationsAboutLimits = false,
+        // инициализация словарей с нормализацией
+		morhynizator = Az.Morph.init('rc/Az.js-master/dicts');
 
+    // замерка длины введенного текста
     var textOnChange = function () {
         var _len = $("#inputText").val().length; 
         var len = _len.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -58,6 +62,7 @@ $(document).ready(function () {
         return (text);
     };
 
+    // слушатель изменнений в окне
     $("#inputText").focus(textOnChange).change(textOnChange).keydown(textOnChange).keyup(textOnChange).select(textOnChange).focus();
 
     (function () {
@@ -68,41 +73,17 @@ $(document).ready(function () {
         $('#inputText').val(text).focus();
     })();
 
-
-
+    // очиска поля ввода
     $('#resetText2Default').click(function () {
-        $("#text").val('');
         setTimeout(function () {
             $("#inputText").val(DEFAULT_TEXT).focus();
+            $("#outputText").val(DEFAULT_TEXT);
         }, 100);
     });
 	
-	// инициализация Объекта Az() ????????????
-    /*Az.Morph.init('../dicts', function(err, Morph) {
-      document.getElementById('word').addEventListener('keyup', updateMorph, false);
-      updateMorph();
-    });*/
+	//-------------------------------------------------------------------	
 	
-	function updateMorph() {
-		
-		
-		
-		return "";
-	}
-	
-	//-------------------------------------------------------------------
-	
-	
-	
-	
-	
-	
-	
-	// инициализация словарей с нормализацией
-	morhynizator = Az.Morph.init('rc/Az.js-master/dicts');
-	
-	
-	// обработка кнопки выполнить
+	// обработка кнопки "выполнить"
     $('#mainPageContent').on('click', '#processButton', function () {
 		
 		var mytext = getText( $("#inputText") ); // получаем текст из textarea
