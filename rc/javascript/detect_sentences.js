@@ -1,6 +1,7 @@
 var signs = ".!?";
 var testtext = "В настоящее время Розничный. бизнес и обеспечивающие процессы находятся под сильным негативным влиянием проблемы работоспособности устройств самообслуживания с функцией рециркуляции.";
 var testtext1 = "Рубим.. Пилим дерево(баобаб) руками, ногами";
+var testtext2 = "Прошел на улице дождь.";
 
 /**
  * Поиск координаты расположения потенциального разднлителя
@@ -55,5 +56,24 @@ var search_left_word = function(text, position, get) {
 	return cutRange(tokens,0,get-1);
 };
 
-var pos = find_separete(testtext1)[0];
-console.log(search_left_word(testtext1, pos, 3));
+/**
+ * Находение тего с правой стороны от потенциальной точки конца предложения
+ * @param {string} text текст для поски слов
+ * @param {number} position позиция с которой отбираются слова
+ * @param {number} get количество возвращаемых слов
+ * @return {array} итоговый массив слов
+*/
+var search_right_word = function(text, position, get) {
+	var m = text.split("");
+	var tempmass = cutRange(m, 0, position-1).join("");
+
+	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)/g);
+	tokens = tokens.filter(function(item) {
+		return item != undefined && item != "";
+	});
+	return cutRange(tokens, tokens.length-get,tokens.length);
+};
+
+var pos = find_separete(testtext2)[0];
+//console.log(search_left_word(testtext1, pos, 3));
+console.log(search_right_word(testtext2, pos, 3));
