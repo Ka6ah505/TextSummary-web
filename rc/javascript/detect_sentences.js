@@ -38,26 +38,7 @@ function cutRange(arr, start, end) {
 };
 
 /**
- * Нахождение тегов с левой стороный от потенциальной точки конца предложения
- * @param {string} text текст для поски слов
- * @param {number} position позиция с которой отбираются слова
- * @param {number} get количество возвращаемых слов
- * @return {array} итоговый массив слов
-*/
-var search_left_word = function(text, position, get) {
-	var m = text.split("");
-	var len = text.split("").length;
-	var tempmass = cutRange(m, position+1, len).join("");
-
-	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)/g);
-	tokens = tokens.filter(function(item) {
-		return item != undefined && item != "";
-	});
-	return cutRange(tokens,0,get-1);
-};
-
-/**
- * Находение тего с правой стороны от потенциальной точки конца предложения
+ * Нахождение тегов с правой стороный от потенциальной точки конца предложения
  * @param {string} text текст для поски слов
  * @param {number} position позиция с которой отбираются слова
  * @param {number} get количество возвращаемых слов
@@ -65,15 +46,57 @@ var search_left_word = function(text, position, get) {
 */
 var search_right_word = function(text, position, get) {
 	var m = text.split("");
-	var tempmass = cutRange(m, 0, position-1).join("");
+	var len = text.split("").length;
+	var tempmass = cutRange(m, position+1, len).join("");
 
-	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)/g);
+	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)|(\.)/g);
 	tokens = tokens.filter(function(item) {
 		return item != undefined && item != "";
 	});
-	return cutRange(tokens, tokens.length-get,tokens.length);
+	tokens = cutRange(tokens,0,get-1);
+	return fill_miss_elements(tokens, get, true);
 };
 
-var pos = find_separete(testtext2)[0];
-//console.log(search_left_word(testtext1, pos, 3));
-console.log(search_right_word(testtext2, pos, 3));
+/**
+ * Находение тегов с левой стороны от потенциальной точки конца предложения
+ * @param {string} text текст для поски слов
+ * @param {number} position позиция с которой отбираются слова
+ * @param {number} get количество возвращаемых слов
+ * @return {array} итоговый массив слов
+*/
+var search_left_word = function(text, position, get) {
+	var m = text.split("");
+	var tempmass = cutRange(m, 0, position-1).join("");
+
+	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)|(\.)/g);
+	tokens = tokens.filter(function(item) {
+		return item != undefined && item != "";
+	});
+	tokens = cutRange(tokens, tokens.length-get,tokens.length);
+	return fill_miss_elements(tokens, get, false);
+};
+
+/**
+ * Заполнение массива пустыми элементами до определённого размера undefined`ми
+ * @param {array} mass массив для заполнения
+ * @param {number} maxElements размер до которого расширяем массив
+ * @param {bool} isPosit направление заполнения true - добавляем в конец, false - добавляем в начало
+ * @return {array} заполненныей массив
+*/
+var fill_miss_elements = function(mass, maxElements, isPosit=true) {
+	var len = mass.length;
+	for (var i=0; i<maxElements-len;i++) {
+		if (isPosit) {
+			mass.push(undefined);
+		} else {
+			mass.unshift(undefined);
+		}
+	}
+	return mass;
+};
+
+var pos = find_separete(testtext1)[1];
+console.log("left\t", search_left_word(testtext1, pos, 3));
+console.log("right\t", search_right_word(testtext1, pos, 3));
+
+//console.log(fill_miss_elements([1,2], 3, true));
