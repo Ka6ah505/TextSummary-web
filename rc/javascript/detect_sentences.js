@@ -2,6 +2,7 @@ var signs = ".!?";
 var testtext = "В настоящее время Розничный. бизнес и обеспечивающие процессы находятся под сильным негативным влиянием проблемы работоспособности устройств самообслуживания с функцией рециркуляции.";
 var testtext1 = "Рубим.. Пилим дерево(баобаб) руками, ногами";
 var testtext2 = "Прошел на улице дождь.";
+var testtext3 = "Функция 1. Организация и проведение проверок (в т.ч. в ходе ревизий) в ТБ";
 
 /**
  * Поиск координаты расположения потенциального разднлителя
@@ -49,7 +50,7 @@ var search_right_word = function(text, position, get) {
 	var len = text.split("").length;
 	var tempmass = cutRange(m, position+1, len).join("");
 
-	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)|(\.)/g);
+	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)|(\")|(\.)/g);
 	tokens = tokens.filter(function(item) {
 		return item != undefined && item != "";
 	});
@@ -68,7 +69,7 @@ var search_left_word = function(text, position, get) {
 	var m = text.split("");
 	var tempmass = cutRange(m, 0, position-1).join("");
 
-	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)|(\.)/g);
+	var tokens = tempmass.split(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\s)|(\")|(\.)/g);
 	tokens = tokens.filter(function(item) {
 		return item != undefined && item != "";
 	});
@@ -95,8 +96,21 @@ var fill_miss_elements = function(mass, maxElements, isPosit=true) {
 	return mass;
 };
 
-var pos = find_separete(testtext1)[1];
-console.log("left\t", search_left_word(testtext1, pos, 3));
-console.log("right\t", search_right_word(testtext1, pos, 3));
+/**
+ * Определение яв ляется ли токен знаком препинания
+ *
+ * @param {string} token токен на проверку
+ * @return {number} 1-если токен знак припинания, 0-если таким не явояется
+*/
+var detect_punctuation_mark = function(token) {
+	if (token.indexOf(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\")|(\.)/g) && token.length==0) {
+		return 1;
+	}
+	return 0;
+}
 
-//console.log(fill_miss_elements([1,2], 3, true));
+//var pos = find_separete(testtext3)[1];
+//console.log("left\t", search_left_word(testtext3, pos, 4));
+//console.log("right\t", search_right_word(testtext3, pos, 4));
+
+console.log(detect_punctuation_mark(" !"));
