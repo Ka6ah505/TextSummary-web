@@ -147,10 +147,24 @@ var detect_len_sequence = function(token) {
 	return 0;
 };
 
+/**
+ * Проверка на число
+ * @param {string} token строка для проверки
+ * @return {number} 1-если строка число, 0-неявляется числом
+*/
+var detect_digit_sign = function(token) {
+	//if (typeof(token) == number) {
+	if (!isNaN(parseFloat(token)) && isFinite(token)) {
+		return 1;
+	}
+	return 0;
+};
+
 //var pos = find_separete(testtext3)[1];
 //console.log("left\t", search_left_word(testtext3, pos, 4));
 //console.log("right\t", search_right_word(testtext3, pos, 4));
 
-console.log(detect_len_sequence(""),0);
-console.log(detect_len_sequence("d"),0);
-console.log(detect_len_sequence("qw"),1);
+console.log(detect_digit_sign("1"),1);
+console.log(detect_digit_sign(""),0);
+console.log(detect_digit_sign("ads"),0);
+console.log(detect_digit_sign("1.2"),1);
