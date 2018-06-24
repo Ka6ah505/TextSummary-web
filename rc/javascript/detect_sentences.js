@@ -137,6 +137,20 @@ var detect_first_upper_sign = function(token) {
 	return 0;
 };
 
+/**
+ * Определение длины строки
+ * @param {string} token слово для замера
+ * @return {number} 1-длина больше одного символа, 0-меньше равна одному символу
+*/
+var detect_len_sequence = function(token) {
+	if (token.split("").length>1) { return 1; }
+	return 0;
+};
+
 //var pos = find_separete(testtext3)[1];
 //console.log("left\t", search_left_word(testtext3, pos, 4));
 //console.log("right\t", search_right_word(testtext3, pos, 4));
+
+console.log(detect_len_sequence(""),0);
+console.log(detect_len_sequence("d"),0);
+console.log(detect_len_sequence("qw"),1);
