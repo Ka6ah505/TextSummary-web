@@ -107,10 +107,31 @@ var detect_punctuation_mark = function(token) {
 		return 1;
 	}
 	return 0;
-}
+};
+
+/**
+ * Определение всё-ли слово состоит из прописных букв
+ * @param {string} token слово для проверки
+ * @return 1 - если состоит только из прописных, 0-если есть и другие символы
+*/
+var detect_upper_sign = function(token) {
+	var m = token.split();
+	//for (var i=0; i<m.length; i++) {
+		//if (m[i].search(/[A-ZА-Я]/g)==-1) {
+		if (/[a-zа-я\s]+/g.test(token)) {
+			return 0;	
+		}
+	//}
+	return 1;
+};
 
 //var pos = find_separete(testtext3)[1];
 //console.log("left\t", search_left_word(testtext3, pos, 4));
 //console.log("right\t", search_right_word(testtext3, pos, 4));
 
-console.log(detect_punctuation_mark(" !"));
+//console.log(detect_punctuation_mark(" !"));
+console.log(detect_upper_sign("AAВ"), 1);
+console.log(detect_upper_sign("ВАРН"), 1);
+console.log(detect_upper_sign("Adsaf"), 0);
+console.log(detect_upper_sign("АПвы"), 0);
+console.log(detect_upper_sign(" "), 0);
