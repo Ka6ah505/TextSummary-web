@@ -112,7 +112,7 @@ var detect_punctuation_mark = function(token) {
 /**
  * Определение всё-ли слово состоит из прописных букв
  * @param {string} token слово для проверки
- * @return 1 - если состоит только из прописных, 0-если есть и другие символы
+ * @return {number} 1 - если состоит только из прописных, 0-если есть и другие символы
 */
 var detect_upper_sign = function(token) {
 	var m = token.split();
@@ -125,13 +125,18 @@ var detect_upper_sign = function(token) {
 	return 1;
 };
 
+/**
+ * Определение начинается ли слово с заглавной буквы
+ * @param {string} слово для проверки
+ * @return {number} 1-слово начинается с заглавной, 0- начинается не с заглавной
+*/
+var detect_first_upper_sign = function(token) {
+	if (token.match(/^[A-ZА-Я]{1}[a-zа-я]*$/g)) {
+		return 1;
+	}
+	return 0;
+};
+
 //var pos = find_separete(testtext3)[1];
 //console.log("left\t", search_left_word(testtext3, pos, 4));
 //console.log("right\t", search_right_word(testtext3, pos, 4));
-
-//console.log(detect_punctuation_mark(" !"));
-console.log(detect_upper_sign("AAВ"), 1);
-console.log(detect_upper_sign("ВАРН"), 1);
-console.log(detect_upper_sign("Adsaf"), 0);
-console.log(detect_upper_sign("АПвы"), 0);
-console.log(detect_upper_sign(" "), 0);
