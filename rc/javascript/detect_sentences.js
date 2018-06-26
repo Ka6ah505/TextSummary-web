@@ -171,7 +171,7 @@ var calculate_vector = function(sentence, len) {
 	for (var i=0; i < punctuation.length; i++) {
 		var l = search_left_word(sentence, punctuation[i], len);
 		var r = search_right_word(sentence, punctuation[i], len);
-		matrix.push(l.concat(r));
+		matrix.push([].concat(calculate_one_side(l),calculate_one_side(r), punctuation[i]));
 	};
 
 	return matrix;
@@ -194,5 +194,4 @@ var calculate_one_side = function(words) {
 	return feature;
 };
 
-//console.log(calculate_vector(testtext3, 3));
-//console.log(calculate_one_side(['петрушка', '2', 'Ромен']));
+console.log(calculate_vector(testtext3, 3));
