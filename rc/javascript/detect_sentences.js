@@ -78,7 +78,7 @@ var search_left_word = function(text, position, get) {
 };
 
 /**
- * Заполнение массива пустыми элементами до определённого размера undefined`ми
+ * Заполнение массива пустыми элементами до определённого размера null`ми
  * @param {array} mass массив для заполнения
  * @param {number} maxElements размер до которого расширяем массив
  * @param {bool} isPosit направление заполнения true - добавляем в конец, false - добавляем в начало
@@ -88,9 +88,9 @@ var fill_miss_elements = function(mass, maxElements, isPosit=true) {
 	var len = mass.length;
 	for (var i=0; i<maxElements-len;i++) {
 		if (isPosit) {
-			mass.push(undefined);
+			mass.push(null);
 		} else {
-			mass.unshift(undefined);
+			mass.unshift(null);
 		}
 	}
 	return mass;
@@ -164,7 +164,39 @@ var detect_digit_sign = function(token) {
 //console.log("left\t", search_left_word(testtext3, pos, 4));
 //console.log("right\t", search_right_word(testtext3, pos, 4));
 
-console.log(detect_digit_sign("1"),1);
-console.log(detect_digit_sign(""),0);
-console.log(detect_digit_sign("ads"),0);
-console.log(detect_digit_sign("1.2"),1);
+//console.log(detect_digit_sign("1"),1);
+//console.log(detect_digit_sign(""),0);
+//console.log(detect_digit_sign("ads"),0);
+//console.log(detect_digit_sign("1.2"),1);
+
+/**
+ * составление вектора фич
+ * @param {string} sentence предложение для разбора
+ * @param {number} len количество слов в окрестности предполагаемого оканчания
+ * @return {array} матрица из фич 
+*/
+var calculate_vector = function(sentence, len) {
+	var matrix = [];
+	var punctuation = find_separete(sentence);
+	for (var i=0; i < punctuation.length; i++) {
+		var l = search_left_word(sentence, punctuation[i], len);
+		var r = search_right_word(sentence, punctuation[i], len);
+		matrix.push(l.concat(r));
+	};
+
+	return matrix;
+};
+
+/**
+ * Вычисление фич по массиву слов
+ * @param {array} words массив слов
+ * @return {array} массив фич
+*/
+var calculate_one_side = function(words) {
+	var feature = [];
+	for (var i=0; i<words.length; i++) {
+
+	}
+};
+
+console.log(calculate_vector(testtext3, 3));
