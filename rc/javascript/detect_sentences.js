@@ -195,8 +195,23 @@ var calculate_vector = function(sentence, len) {
 var calculate_one_side = function(words) {
 	var feature = [];
 	for (var i=0; i<words.length; i++) {
-
+		feature.push(detect_punctuation_mark(words[i]));
+		feature.push(detect_upper_sign(words[i]));
+		feature.push(detect_first_upper_sign(words[i]));
+		feature.push(detect_len_sequence(words[i]));
+		feature.push(detect_digit_sign(words[i]));
 	}
+	return feature;
 };
 
-console.log(calculate_vector(testtext3, 3));
+//console.log(calculate_vector(testtext3, 3));
+//console.log(calculate_one_side(['петрушка', '2', 'Ромен']));
+console.log("Анна\t",detect_upper_sign("Анна"), 0);
+console.log("Erick\t",detect_upper_sign("Erick"), 0);
+console.log("BoarD\t",detect_upper_sign("BoarD"), 0);
+console.log("directoR\t",detect_upper_sign("directoR"), 0);
+console.log("ломтик\t",detect_upper_sign("ломтик"), 0);
+console.log("РЫЦ\\АРЬ\t",detect_upper_sign("РЫЦ\\АРЬ"), 0);
+console.log("РЫЦАРЬ\t",detect_upper_sign("РЫЦАРЬ"), 1);
+console.log("РЫXАРЬ\t",detect_upper_sign("РЫXАРЬ"), 0);
+console.log("2\t",detect_upper_sign("2"), 0);
