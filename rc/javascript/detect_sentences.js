@@ -116,12 +116,11 @@ var detect_punctuation_mark = function(token) {
 */
 var detect_upper_sign = function(token) {
 	var m = token.split();
-	//for (var i=0; i<m.length; i++) {
-		//if (m[i].search(/[A-ZА-Я]/g)==-1) {
-		if (/[a-zа-я\s]+/g.test(token)) {
+	for (var i=0; i<m.length; i++) {
+		if (/[a-zа-я0-9]/g.test(m[i])) {
 			return 0;	
 		}
-	//}
+	}
 	return 1;
 };
 
@@ -160,15 +159,6 @@ var detect_digit_sign = function(token) {
 	return 0;
 };
 
-//var pos = find_separete(testtext3)[1];
-//console.log("left\t", search_left_word(testtext3, pos, 4));
-//console.log("right\t", search_right_word(testtext3, pos, 4));
-
-//console.log(detect_digit_sign("1"),1);
-//console.log(detect_digit_sign(""),0);
-//console.log(detect_digit_sign("ads"),0);
-//console.log(detect_digit_sign("1.2"),1);
-
 /**
  * составление вектора фич
  * @param {string} sentence предложение для разбора
@@ -206,12 +196,3 @@ var calculate_one_side = function(words) {
 
 //console.log(calculate_vector(testtext3, 3));
 //console.log(calculate_one_side(['петрушка', '2', 'Ромен']));
-console.log("Анна\t",detect_upper_sign("Анна"), 0);
-console.log("Erick\t",detect_upper_sign("Erick"), 0);
-console.log("BoarD\t",detect_upper_sign("BoarD"), 0);
-console.log("directoR\t",detect_upper_sign("directoR"), 0);
-console.log("ломтик\t",detect_upper_sign("ломтик"), 0);
-console.log("РЫЦ\\АРЬ\t",detect_upper_sign("РЫЦ\\АРЬ"), 0);
-console.log("РЫЦАРЬ\t",detect_upper_sign("РЫЦАРЬ"), 1);
-console.log("РЫXАРЬ\t",detect_upper_sign("РЫXАРЬ"), 0);
-console.log("2\t",detect_upper_sign("2"), 0);
