@@ -174,7 +174,18 @@ var calculate_vector = function(sentence, len) {
 		matrix.push([].concat(calculate_one_side(l),calculate_one_side(r), punctuation[i]));
 	};
 
-	return matrix;
+	var m = [];
+	for (var i=0; i<matrix.length; i++) {
+		var item = {};
+		for (var j=0;j<matrix[i].length-1; j++) {
+			item['a'+j] = matrix[i][j];
+		}
+		item['answer'] = matrix[i][matrix[i].length-1]
+		m.push(item);
+	}
+
+	//return matrix;
+	return m;
 };
 
 /**
@@ -194,4 +205,4 @@ var calculate_one_side = function(words) {
 	return feature;
 };
 
-console.log(calculate_vector(testtext3, 3));
+console.log(calculate_vector(testtext3, 1));
