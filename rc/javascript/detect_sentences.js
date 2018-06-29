@@ -105,8 +105,12 @@ var detect_sentences = {
 	 * @return {number} 1-если токен знак припинания, 0-если таким не явояется
 	*/
 	detect_punctuation_mark:function(token) {
-		if (token.indexOf(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\")|(\.)/g) && token.length==0) {
-			return 1;
+		try {
+			if (token.indexOf(/(\,)|(\))|(\()|(\;)|(\:)|(\+)|(\№)|(\*)|(\&)|(\@)|(\")|(\.)/g) && token.length==0) {
+				return 1;
+			}
+		} catch (err) {
+			return 0;
 		}
 		return 0;
 	},
@@ -117,11 +121,15 @@ var detect_sentences = {
 	 * @return {number} 1 - если состоит только из прописных, 0-если есть и другие символы
 	*/
 	detect_upper_sign:function(token) {
-		var m = token.split();
-		for (var i=0; i<m.length; i++) {
-			if (/[a-zа-я0-9]/g.test(m[i])) {
-				return 0;	
+		try {
+			var m = token.split();
+			for (var i=0; i<m.length; i++) {
+				if (/[a-zа-я0-9]/g.test(m[i])) {
+					return 0;	
+				}
 			}
+		} catch(err) {
+			return 0;
 		}
 		return 1;
 	},
@@ -132,8 +140,12 @@ var detect_sentences = {
 	 * @return {number} 1-слово начинается с заглавной, 0- начинается не с заглавной
 	*/
 	detect_first_upper_sign:function(token) {
-		if (token.match(/^[A-ZА-Я]{1}[a-zа-я]*$/g)) {
-			return 1;
+		try {
+			if (token.match(/^[A-ZА-Я]{1}[a-zа-я]*$/g)) {
+				return 1;
+			}
+		} catch(err) {
+			return 0;	
 		}
 		return 0;
 	},
@@ -144,7 +156,12 @@ var detect_sentences = {
 	 * @return {number} 1-длина больше одного символа, 0-меньше равна одному символу
 	*/
 	detect_len_sequence:function(token) {
-		if (token.split("").length>1) { return 1; }
+		try {
+			if (token.split("").length>1) { return 1; }
+		} catch(err) {
+			return 0;
+		}
+		
 		return 0;
 	},
 
