@@ -62,30 +62,25 @@ $(document).ready(function () {
 	
 	// обработка кнопки "выполнить"
     $('#mainPageContent').on('click', '#processButton', function () {
-		
-		var mytext = getText( $("#inputText") ); // получаем текст из textarea
-		
-		
-
-
-
-		//var n = tokenizator.count({ 'WORD': true }, true) //количесткво токенов слов
-		var temptext = '';
-		// for (var i = 0; i < tokens.length; i++) {
-		// 	var t = Az.Morph(tokens[i].toString(), { typos: 'auto' }); // морфологический разбор слова
-		// 	var tword = t[0].normalize(true).word; //начальная форма слова 
-		// 	temptext = temptext + tword+ '\n'; // вывод
-		// }
-		// $("#outputText").val(temptext); // загоняем тект в textarea
-
-        var massSentences = calculateSentence(mytext);
+        var Items = [];
+        var massSentences = calculateSentence(getText( $("#inputText") ));
         for (var i=0; i < massSentences.length; i++) {
 
-            temptext = temptext + i+ " - " +massSentences[i] + '\n';
+            // вычисляем важность предложения
+            var tempScore = calculatingScore(tokeniserText(massSentences[i]));
+
+            Items.push({
+                    number: i, 
+                    text: massSentences[i],
+                    weight: tempScore,
+                }
+            );
         }
         
         console.log("Всего элементов\t",massSentences.length);
-        $("#outputText").val(temptext);
+
+        console.log(Items);
+        // $("#outputText").val(temptext);
     });
 
     /**
@@ -122,15 +117,15 @@ $(document).ready(function () {
     */
     function calculatingScore(massWords) {
         var score = 0;
-        for(var i = 0; i < mass.length; i++) {
-            var tempItem = getDictionary(mass[i]);
+        for(var i = 0; i < massWords.length; i++) {
+            var tempItem = getDictionary(massWords[i]);
             if (tempItem != undefined) {
                 score = score + tempItem;
             } else {
                 console.log("надо смотреть")
             }
         }
-        return score;
+        return score / massWords.length;
     };
 
     /**
