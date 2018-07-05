@@ -87,28 +87,138 @@ $(document).ready(function () {
     $('#mainPageContent').on('click', '#processButton', function () {
 		
 		var mytext = getText( $("#inputText") ); // получаем текст из textarea
-		tokenizator = Az.Tokens(mytext, { // токенизацяи текста
-				html: true,
-				wiki: true,
-				markdown: true
-			}
-		);
+		// tokenizator = Az.Tokens(mytext, { // токенизацяи текста
+		// 		html: true,
+		// 		wiki: true,
+		// 		markdown: true
+		// 	}
+		// );
 		
 		
 		// текст на предложения 
 		//sentence.startTest = $("#inputText")
 		
 		
-		var tokens = tokenizator.done({ 'WORD': true }, true) //токены слова
+		// var tokens = tokenizator.done({ 'WORD': true }, true) //токены слова
 		//var n = tokenizator.count({ 'WORD': true }, true) //количесткво токенов слов
 		var temptext = '';
-		for (var i = 0; i < tokens.length; i++) {
-			var t = Az.Morph(tokens[i].toString(), { typos: 'auto' }); // морфологический разбор слова
-			var tword = t[0].normalize(true).word; //начальная форма слова 
-			temptext = temptext + tword+ '\n'; // вывод
-		}
-		$("#outputText").val(temptext); // загоняем тект в textarea
+		// for (var i = 0; i < tokens.length; i++) {
+		// 	var t = Az.Morph(tokens[i].toString(), { typos: 'auto' }); // морфологический разбор слова
+		// 	var tword = t[0].normalize(true).word; //начальная форма слова 
+		// 	temptext = temptext + tword+ '\n'; // вывод
+		// }
+		// $("#outputText").val(temptext); // загоняем тект в textarea
+
+        var massSentences = calculateSentence(mytext);
+        for (var i=0; i < massSentences.length; i++) {
+            temptext = temptext + i+ " - " +massSentences[i] + '\n';
+        }
+        console.log("Всего элементов\t",massSentences.length);
+        $("#outputText").val(temptext);
     });
+
+    /**
+     * Oбрезание массива до определенного диапазона
+     *
+     * @param {string} text текст пользователя в котором выделяем предложения
+     * @return {array} массив обнаруженных предложений
+    */
+    function calculateSentence(text) {
+        var data = [
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:180,  answer:1},
+            {a0:0,a1:0,a2:1,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:1,a16:0,a17:0,a18:0,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:1,a28:1,a29:0,number:26,   answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:1,a11:0,a12:0,a13:0,a14:0,a15:1,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:1,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:27,   answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:1,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:1,a18:1,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:28,   answer:1},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:1,a8:1,a9:0,a10:0,a11:0,a12:0,a13:0,a14:1,a15:0,a16:0,a17:0,a18:1,a19:1,a20:1,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:110,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:211,  answer:1},
+            {a0:0,a1:0,a2:1,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:1,a18:1,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:25,   answer:1},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:58,   answer:1},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:0,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:1,a28:1,a29:0,number:16,   answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:1,a18:1,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:18,   answer:1},
+            {a0:0,a1:0,a2:1,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:36,   answer:1},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:0,a10:0,a11:1,a12:1,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:1,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:1,number:1,    answer:0},
+            {a0:0,a1:1,a2:1,a3:0,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:1,a15:0,a16:0,a17:0,a18:0,a19:1,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:1,number:3,    answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:1,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:1,a15:0,a16:0,a17:0,a18:0,a19:1,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:1,a27:0,a28:1,a29:0,number:5,    answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:1,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:1,a15:0,a16:1,a17:0,a18:1,a19:0,a20:0,a21:0,a22:1,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:7,    answer:0},
+            {a0:0,a1:1,a2:0,a3:1,a4:0,a5:0,a6:0,a7:1,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:26,   answer:1},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:1,a8:1,a9:0,a10:0,a11:0,a12:0,a13:0,a14:1,a15:0,a16:0,a17:1,a18:1,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:9,    answer:1},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:49,   answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:51,   answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:255,  answer:1},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:1,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:100,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:0,a21:0,a22:0,a23:0,a24:1,a25:0,a26:0,a27:0,a28:1,a29:0,number:105,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:0,a6:0,a7:0,a8:0,a9:1,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:116,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:1,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:121,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:246,  answer:1},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:1,a18:1,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:27,   answer:0},
+            {a0:0,a1:0,a2:1,a3:1,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:1,a18:1,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:40,   answer:0},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:1,a8:1,a9:0,a10:0,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:1,a20:1,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:52,   answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:0,a14:1,a15:1,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:54,   answer:0},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:1,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:61,   answer:0},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:1,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:93,   answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:98,   answer:0},
+            {a0:0,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:1,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:115,  answer:0},
+            {a0:0,a1:0,a2:1,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:153,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:1,a29:1,number:162,  answer:0},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:1,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:206,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:1,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:211,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:1,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:253,  answer:1},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:1,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:72,   answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:1,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:77,   answer:0},
+            {a0:1,a1:0,a2:0,a3:0,a4:0,a5:0,a6:0,a7:0,a8:0,a9:1,a10:0,a11:0,a12:0,a13:1,a14:0,a15:0,a16:0,a17:0,a18:1,a19:0,a20:1,a21:0,a22:0,a23:0,a24:0,a25:1,a26:0,a27:0,a28:0,a29:0,number:203,  answer:0},
+            {a0:0,a1:0,a2:0,a3:1,a4:0,a5:1,a6:0,a7:0,a8:0,a9:0,a10:0,a11:0,a12:0,a13:1,a14:0,a15:1,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:1,a24:0,a25:0,a26:0,a27:0,a28:1,a29:0,number:208,  answer:0},
+            {a0:0,a1:0,a2:1,a3:1,a4:0,a5:0,a6:1,a7:0,a8:1,a9:0,a10:1,a11:0,a12:0,a13:0,a14:0,a15:0,a16:0,a17:0,a18:0,a19:0,a20:0,a21:0,a22:0,a23:0,a24:0,a25:0,a26:0,a27:0,a28:0,a29:0,number:298,  answer:1}
+        ];
+
+        var config = {
+            trainingSet: data,
+            categoryAttr: 'answer',
+            ignoredAttributes: ['number']
+            // maxTreeDepth: 10,
+            // entropyThrehold: 0.05,
+            // minItemsCount: 3
+        };
+
+        var numberOfTrees = 5;
+        var randomForest = new dt.RandomForest(config, numberOfTrees);
+        
+        function testRun(text) {
+            var arrPuncts = detect_sentences.calculate_vector(text, 3);
+
+            var arrMass = {};
+            for (var i=0; i<arrPuncts.length; i++) {
+                // console.log(detectAnswer(randomForest.predict(arrPuncts[i])));
+                arrMass[arrPuncts[i].number]=detectAnswer(randomForest.predict(arrPuncts[i]));
+            }
+
+            var arrtext = text.split("");
+
+            var tempCount=0;
+            for (var key in arrMass) {
+                if (arrMass[key] === 1) {
+                    // console.log(+key+1+tempCount);
+                    arrtext.splice(+key+1+tempCount, 0, '<EOF>')
+                    tempCount++;
+                }
+            }
+            return arrtext.join("").split('<EOF>')
+        }
+
+        function detectAnswer(item) {
+            var answer = 0;
+            var diff = -1;
+
+            for (var key in item) {
+                if (item[key]>diff) {
+                    diff = item[key];
+                    answer = +key;
+                }
+            }
+            return answer;
+        }
+
+        return testRun(text);
+    };
 	
 	
 	
