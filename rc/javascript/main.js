@@ -113,9 +113,23 @@ $(document).ready(function () {
         return massWords;
     };
 
+    /**
+     * Сумма слов массива
+     *
+     * @param {array} massWords массив инфинитивов
+     * @return {number} сумма всех слов по словарю idf
+     *
+    */
     function calculatingScore(massWords) {
         var score = 0;
-
+        for(var i = 0; i < mass.length; i++) {
+            var tempItem = getDictionary(mass[i]);
+            if (tempItem != undefined) {
+                score = score + tempItem;
+            } else {
+                console.log("надо смотреть")
+            }
+        }
         return score;
     };
 
@@ -226,8 +240,6 @@ $(document).ready(function () {
 	
 	//----------------------------------------------------------------------------------
 	
-	
-	
     function processing_start(){
         $('#inputText').addClass('no-change').attr('readonly', 'readonly').attr('disabled', 'disabled');
         $('.result-info').show().removeClass('error').html('Идет обработка... <label id="processingTickLabel"></label>');
@@ -249,31 +261,30 @@ $(document).ready(function () {
         return (text.replace(/(^\s+)|(\s+$)/g, "") == "");
     };
 	//Запрос к бэку
-    (function() {
-        $.ajax({
-            type: "POST",
-            url: "RESTProcessHandler.ashx",
-            timeout: (600 * 1000),
-            data: { text: "_dummy_", forceLoadModel: true }
-        });
-    })();
+    // (function() {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "RESTProcessHandler.ashx",
+    //         timeout: (600 * 1000),
+    //         data: { text: "_dummy_", forceLoadModel: true }
+    //     });
+    // })();
 	
-    /*var processingTickCount = 1;
-    function processing_tick() {
-        var n2 = function (n) {
-            n = n.toString();
-            return ((n.length == 1) ? ('0' + n) : n);
-        }
-        var d = new Date(new Date(new Date(new Date().setHours(0)).setMinutes(0)).setSeconds(processingTickCount));
-        var t = n2(d.getHours()) + ':' + n2(d.getMinutes()) + ':' + n2(d.getSeconds()); //d.toLocaleTimeString();
-        var $s = $('#processingTickLabel');
-        if ($s.length) {
-            $s.text(t);
-            processingTickCount++;
-            setTimeout(processing_tick, 1000);            
-        } else {
-            processingTickCount = 1;
-        }        
-    }
-*/
+    // var processingTickCount = 1;
+    // function processing_tick() {
+    //     var n2 = function (n) {
+    //         n = n.toString();
+    //         return ((n.length == 1) ? ('0' + n) : n);
+    //     }
+    //     var d = new Date(new Date(new Date(new Date().setHours(0)).setMinutes(0)).setSeconds(processingTickCount));
+    //     var t = n2(d.getHours()) + ':' + n2(d.getMinutes()) + ':' + n2(d.getSeconds()); //d.toLocaleTimeString();
+    //     var $s = $('#processingTickLabel');
+    //     if ($s.length) {
+    //         $s.text(t);
+    //         processingTickCount++;
+    //         setTimeout(processing_tick, 1000);            
+    //     } else {
+    //         processingTickCount = 1;
+    //     }        
+    // }
 });
