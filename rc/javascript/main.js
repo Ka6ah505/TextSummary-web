@@ -1,27 +1,4 @@
-﻿// объект предложение для хранения информации о нем
-	/*sentence = {
-		startTest: undefined,
-		normalText: undefined,
-		totalPoints: undefined,
-		
-		normalization = function() {
-			// нормализуем текст
-			//
-			//
-			//
-			//
-			return this.normalText;
-		},
-		calculatePoint = function() {
-			//
-			//
-			//
-			//
-			return this.totalPoints;
-		}
-	}*/
-
-// настройка ограничений для поля ввода
+﻿// настройка ограничений для поля ввода
 $(document).ready(function () {
 	// блок констант
     var MAX_INPUTTEXT_LENGTH = 10000,
@@ -87,19 +64,11 @@ $(document).ready(function () {
     $('#mainPageContent').on('click', '#processButton', function () {
 		
 		var mytext = getText( $("#inputText") ); // получаем текст из textarea
-		// tokenizator = Az.Tokens(mytext, { // токенизацяи текста
-		// 		html: true,
-		// 		wiki: true,
-		// 		markdown: true
-		// 	}
-		// );
 		
 		
-		// текст на предложения 
-		//sentence.startTest = $("#inputText")
-		
-		
-		// var tokens = tokenizator.done({ 'WORD': true }, true) //токены слова
+
+
+
 		//var n = tokenizator.count({ 'WORD': true }, true) //количесткво токенов слов
 		var temptext = '';
 		// for (var i = 0; i < tokens.length; i++) {
@@ -111,11 +80,38 @@ $(document).ready(function () {
 
         var massSentences = calculateSentence(mytext);
         for (var i=0; i < massSentences.length; i++) {
+
             temptext = temptext + i+ " - " +massSentences[i] + '\n';
         }
+        
         console.log("Всего элементов\t",massSentences.length);
         $("#outputText").val(temptext);
     });
+
+    /**
+     * Морфирование слов в предложении и преведение к инфинитиву
+     *
+     * @param {string} text - Предлодение на обработку
+     * @return {array} массив инфинитивов слов из которых состоит полученный текст.
+    */
+    function tokeniserText(text) {
+        tokenizator = Az.Tokens(text, { // токенизацяи текста
+                html: true,
+                wiki: true,
+                markdown: true
+            }
+        );
+
+        var tokens = tokenizator.done({ 'WORD': true }, true) //токены слова
+        var massWords = []; // массив для слов
+        for (var i = 0; i < tokens.length; i++) {
+            var t = Az.Morph(tokens[i].toString(), { typos: 'auto' }); // морфологический разбор слова
+            massWords.push(t[0].normalize(true).word); //начальная форма слова 
+            //temptext = temptext + tword+ '\n'; // вывод
+        }
+
+        return massWords;
+    };
 
     /**
      * Oбрезание массива до определенного диапазона
