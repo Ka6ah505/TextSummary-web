@@ -90,7 +90,7 @@ $(document).ready(function () {
         // вычисление количества предложений для вывода 
         var countSentences = Math.floor(Items.length*tickmarks/100);
 
-        Items = Items.sort(compareWeight).slice(0, 4);
+        Items = Items.sort(compareWeight).slice(0, countSentences);
 
         console.log("Предложений на вывод пользователю:\t", countSentences);
         
@@ -99,7 +99,11 @@ $(document).ready(function () {
         // вывод по убыванию
         
         console.log(Items.sort(compareNumber));
-        // $("#outputText").val(temptext);
+        var tempText = "";
+        for (var i = 0; i < Items.length; i++) {
+            tempText = tempText + Items[i].text + "\n";
+        }
+        $("#outputText").val(tempText);
     });
 
     /**
