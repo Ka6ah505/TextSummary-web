@@ -69,6 +69,7 @@ $(document).ready(function () {
             // вычисляем важность предложения
             var tempScore = calculatingScore(tokeniserText(massSentences[i]));
 
+            // список объектов(свойств предложений)
             Items.push({
                     number: i, 
                     text: massSentences[i],
@@ -79,9 +80,22 @@ $(document).ready(function () {
         
         console.log("Всего элементов\t",massSentences.length);
 
-        console.log(Items);
+        // вывод по убыванию
+        
+        console.log(Items.sort(compareWeight));
         // $("#outputText").val(temptext);
     });
+
+    /**
+     * Сравнение весов предложений
+     *
+     * @param {object} obj1 первый объект
+     * @param {object} obj2 второй объект
+     * @return место?
+    */
+    function compareWeight(obj1, obj2) {
+        return obj2.weight - obj1.weight;
+    }
 
     /**
      * Морфирование слов в предложении и преведение к инфинитиву
