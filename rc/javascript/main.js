@@ -6,6 +6,7 @@ $(document).ready(function () {
         LOCALSTORAGE_PROCESSTYPE_KEY = 'process-type',
         DEFAULT_TEXT = '',
         ShowInformationsAboutLimits = false,
+        tickmarks = 20,
         // инициализация словарей с нормализацией
 		morhynizator = Az.Morph.init('rc/Az.js-master/dicts');
 
@@ -57,6 +58,14 @@ $(document).ready(function () {
             $("#outputText").val(DEFAULT_TEXT);
         }, 100);
     });
+
+    // слушатель ползунка
+    $('#summary').change(function() {
+        tickmarks = $('#summary').val();
+        console.log(tickmarks);
+    });
+
+    
 	
 	//-------------------------------------------------------------------	
 	
@@ -77,6 +86,8 @@ $(document).ready(function () {
                 }
             );
         }
+
+
         
         console.log("Всего элементов\t",massSentences.length);
 
