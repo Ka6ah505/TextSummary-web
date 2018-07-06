@@ -87,13 +87,18 @@ $(document).ready(function () {
             );
         }
 
+        // вычисление количества предложений для вывода 
+        var countSentences = Math.floor(Items.length*tickmarks/100);
 
+        Items = Items.sort(compareWeight).slice(0, 4);
+
+        console.log("Предложений на вывод пользователю:\t", countSentences);
         
         console.log("Всего элементов\t",massSentences.length);
 
         // вывод по убыванию
         
-        console.log(Items.sort(compareWeight));
+        console.log(Items.sort(compareNumber));
         // $("#outputText").val(temptext);
     });
 
@@ -106,6 +111,17 @@ $(document).ready(function () {
     */
     function compareWeight(obj1, obj2) {
         return obj2.weight - obj1.weight;
+    }
+
+    /**
+     * Сравнение порядковых номеров предложений в тексте
+     *
+     * @param {object} obj1 первый объект
+     * @param {object} obj2 второй объект
+     * @return место?
+    */
+    function compareNumber(obj1, obj2) {
+        return obj1.number - obj2.number;
     }
 
     /**
