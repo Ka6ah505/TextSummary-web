@@ -145,7 +145,9 @@ $(document).ready(function () {
         var tokens = tokenizator.done({ 'WORD': true }, true) //токены слова
         var massWords = []; // массив для слов
         for (var i = 0; i < tokens.length; i++) {
+            console.log(tokens[i].toString());
             var t = Az.Morph(tokens[i].toString(), { typos: 'auto' }); // морфологический разбор слова
+
             massWords.push(t[0].normalize(true).word); //начальная форма слова 
             //temptext = temptext + tword+ '\n'; // вывод
         }
